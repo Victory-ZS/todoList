@@ -53,4 +53,8 @@ public class EmployeeRepository {
                 .orElseThrow(EmployeeNotFoundException::new);
         return max + 1;
     }
+
+    public void delete(Employee employee) {
+        employees.remove(employee);
+    }
 }

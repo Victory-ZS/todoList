@@ -1,5 +1,6 @@
 package com.rest.springbootemployee;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,6 +40,7 @@ public class EmployeeController {
 
 //    POST      /employees                    # add an employee
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Employee create(@RequestBody Employee employee){
         return employeeRepository.insert(employee);
     }
@@ -54,8 +56,13 @@ public class EmployeeController {
             existingEmployee.setSalary(employeeToUpdate.getSalary());
         }
         return existingEmployee;
-
     }
 
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable int id){
+        Employee employee = employeeRepository.findById(id);
+        employeeRepository.delete(employee);
+    }
 
 }
