@@ -40,4 +40,10 @@ public class CompanyController {
         return companyRepository.insertCompany(company);
     }
 
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public Company updateCompany(@PathVariable int id, @RequestBody Company companyToUpdate){
+        return companyRepository.updateCompany(id, companyToUpdate);
+    }
+
 }
