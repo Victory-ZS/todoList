@@ -68,4 +68,9 @@ public class CompanyRepository {
         existingCompany = companyToUpdate;
         return existingCompany;
     }
+
+    public void deleteCompanyById(int id) {
+        Company company = this.findCompanyById(id);
+        companies.remove(company);
+    }
 }
