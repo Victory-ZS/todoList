@@ -31,4 +31,9 @@ public class CompanyController {
         return companyRepository.findEmployeesById(id);
     }
 
+    @GetMapping(params = {"page", "pageSize"})
+    public List<Company> findCompaniesByPage(int page, int pageSize){
+        return companyRepository.findAllCompaniesByPage(page, pageSize);
+    }
+
 }
