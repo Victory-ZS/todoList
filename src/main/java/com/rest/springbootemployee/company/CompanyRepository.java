@@ -1,6 +1,7 @@
 package com.rest.springbootemployee.company;
 
 import com.rest.springbootemployee.Employee;
+import com.rest.springbootemployee.EmployeeNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -21,5 +22,12 @@ public class CompanyRepository {
     }
     public List<Company> findAllCompanies() {
         return companies;
+    }
+
+    public Company findCompanyById(int id) {
+        return companies.stream()
+                .filter(company -> id == company.getId())
+                .findFirst()
+                .orElseThrow(EmployeeNotFoundException::new);
     }
 }
