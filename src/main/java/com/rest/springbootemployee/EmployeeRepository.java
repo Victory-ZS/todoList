@@ -34,4 +34,23 @@ public class EmployeeRepository {
                 .collect(Collectors.toList());
     }
 
+    public List<Employee> findByPage(int page, int pageSize){
+        return employees.stream()
+                .skip((long)(page - 1) * pageSize)
+                .limit(pageSize)
+                .collect(Collectors.toList());
+    }
+
+    public Employee insert(Employee employee) {
+        employee.setId(generateNewId());
+        employees.add(employee);
+        return employee;
+    }
+
+    public int generateNewId(){
+        int max = employees.stream()
+                .mapToInt(Employee::getId).max()
+                .orElseThrow(EmployeeNotFoundException::new);
+        return max + 1;
+    }
 }
