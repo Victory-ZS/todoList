@@ -49,4 +49,17 @@ public class CompanyRepository {
                 .limit(pageSize)
                 .collect(Collectors.toList());
     }
+
+    public Company insertCompany(Company company) {
+        company.setId(generateNewId());
+        companies.add(company);
+        return company;
+    }
+
+    private int generateNewId() {
+        int max = companies.stream()
+                .mapToInt(Company::getId).max()
+                .orElseThrow(EmployeeNotFoundException::new);
+        return max + 1;
+    }
 }

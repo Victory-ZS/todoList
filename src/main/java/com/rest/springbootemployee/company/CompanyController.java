@@ -1,10 +1,8 @@
 package com.rest.springbootemployee.company;
 
 import com.rest.springbootemployee.Employee;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,6 +32,12 @@ public class CompanyController {
     @GetMapping(params = {"page", "pageSize"})
     public List<Company> findCompaniesByPage(int page, int pageSize){
         return companyRepository.findAllCompaniesByPage(page, pageSize);
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Company createCompany(@RequestBody Company company){
+        return companyRepository.insertCompany(company);
     }
 
 }
