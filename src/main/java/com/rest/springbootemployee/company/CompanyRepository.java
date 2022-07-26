@@ -33,14 +33,9 @@ public class CompanyRepository {
     }
 
     public List<Employee> findEmployeesById(int id) {
-        List<Employee> employees = new ArrayList<>();
-        for(Company company : companies){
-            if(company.getId() == id){
-                employees.add(company.getEmployees());
-            }
-        }
-        return employees;
-
+        return companies.stream().
+                filter(company -> company.getId() == id).map(Company::getEmployees)
+                .collect(Collectors.toList());
     }
 
     public List<Company> findAllCompaniesByPage(int page, int pageSize) {
