@@ -11,6 +11,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(SpringExtension.class)
 public class EmployeeServiceTest {
@@ -61,17 +63,28 @@ public class EmployeeServiceTest {
     @Test
     void should_create_employee_when_post_given_a_new_employee() {
         //given
-        Employee newEmployee = new Employee(2,"Tom", 23, "Male", 90000);
-        given(employeeRepository.insert(newEmployee)).willReturn(newEmployee);
+        Employee employee = new Employee(2,"Tom", 23, "Male", 90000);
+        given(employeeRepository.insert(employee)).willReturn(employee);
         //when
-        Employee employeeAdd = employeeService.insert(newEmployee);
+        Employee newEmployee = employeeService.insert(employee);
         //then
-        assertEquals("Tom", employeeAdd.getName());
-        assertEquals(23, employeeAdd.getAge());
-        assertEquals("Male", employeeAdd.getGender());
-        assertEquals(90000, employeeAdd.getSalary());
+        assertEquals("Tom", newEmployee.getName());
+        assertEquals(23, newEmployee.getAge());
+        assertEquals("Male", newEmployee.getGender());
+        assertEquals(90000, newEmployee.getSalary());
 
     }
+
+    @Test
+    void should_call_repository_delete_when_delete_given_by_id() {
+        //given
+
+        //when
+        employeeService.delete(1);
+        //then
+        verify(employeeRepository,times(1)).delete(employeeRepository.findById(1));
+    }
+
 
 
 

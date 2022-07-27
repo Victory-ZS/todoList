@@ -30,4 +30,8 @@ public class EmployeeService {
     public Employee insert(Employee newEmployee) {
         return employeeRepository.insert(newEmployee);
     }
+
+    public void delete(int id) {
+        employeeRepository.delete(employeeRepository.findById(id));
+    }
 }
