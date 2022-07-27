@@ -196,4 +196,22 @@ public class CompanyControllerTest {
         assertThat(companies.get(0).getCompanyName(), equalTo("summer"));
     }
 
+    @Test
+    void should_delete_company_when_perform_get_given_id() throws Exception {
+        //given
+        List<Employee> employees = new ArrayList<>();
+        employees.add(new Employee(1,"Lily1",12,"male",1000));
+        employees.add(new Employee(2,"Lily2",23,"female",2000));
+        companyRepository.insertCompany(new Company(1, "spring", employees));
+        companyRepository.insertCompany(new Company(2, "summer", employees));
+
+        //when
+        client.perform(MockMvcRequestBuilders.delete("/companies/{id}", 1))
+                .andExpect(MockMvcResultMatchers.status().isNoContent());
+
+        //then
+        List<Company> companies = companyRepository.findAllCompanies();
+        assertThat(companies,hasSize(1));
+    }
+
 }
