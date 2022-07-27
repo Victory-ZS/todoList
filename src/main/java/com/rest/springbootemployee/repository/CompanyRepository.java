@@ -1,7 +1,8 @@
-package com.rest.springbootemployee.company;
+package com.rest.springbootemployee.repository;
 
-import com.rest.springbootemployee.Employee;
-import com.rest.springbootemployee.EmployeeNotFoundException;
+import com.rest.springbootemployee.entity.Employee;
+import com.rest.springbootemployee.entity.Company;
+import com.rest.springbootemployee.exception.EmployeeNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;

@@ -1,6 +1,8 @@
-package com.rest.springbootemployee.company;
+package com.rest.springbootemployee.controller;
 
-import com.rest.springbootemployee.Employee;
+import com.rest.springbootemployee.entity.Employee;
+import com.rest.springbootemployee.entity.Company;
+import com.rest.springbootemployee.repository.CompanyRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
