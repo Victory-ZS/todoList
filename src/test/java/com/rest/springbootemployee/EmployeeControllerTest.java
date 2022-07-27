@@ -87,6 +87,7 @@ public class EmployeeControllerTest {
         employeeRepository.insert(new Employee(2,"Tom", 33, "Male", 20000));
         employeeRepository.insert(new Employee(3,"Lisa", 33, "Female", 30000));
 
+
         //when
         client.perform(MockMvcRequestBuilders.get("/employees")
                 .param("gender","Female"))
@@ -95,16 +96,26 @@ public class EmployeeControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value("Sally"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].age").value(22))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].gender").value("Female"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].salary").value(10000))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1].id").isNumber())
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1].name").value("Lisa"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1].age").value(33))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1].gender").value("Female"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1].salary").value(30000));
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].salary").value(10000));
+
 
         //then
 
+    }
 
+    @Test
+    void should_get_employee_by_id_1_when_perform_get_given_employees() throws Exception {
+        //given
+        employeeRepository.insert(new Employee(1,"Sally", 22, "Female", 10000));
+        employeeRepository.insert(new Employee(2,"Tom", 33, "Male", 20000));
+
+        //when
+        client.perform(MockMvcRequestBuilders.get("/employees/{id}", 1))     //request
+
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1));
+
+        //then
 
     }
 
