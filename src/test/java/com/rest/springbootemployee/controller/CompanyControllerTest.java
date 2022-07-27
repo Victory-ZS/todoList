@@ -94,4 +94,26 @@ public class CompanyControllerTest {
 
     }
 
+    @Test
+    void should_get_companies_when_perform_get_page_pageSize() throws Exception {
+        //given
+        List<Employee> employees = new ArrayList<>();
+        employees.add(new Employee(1,"Lily1",12,"male",1000));
+        employees.add(new Employee(2,"Lily2",23,"female",2000));
+        companyRepository.insertCompany(new Company(1, "spring", employees));
+        companyRepository.insertCompany(new Company(2, "summer", employees));
+
+        //when
+        client.perform(MockMvcRequestBuilders.get("/companies")
+                        .param("page","1")
+                        .param("pageSize", "2"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(2)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(1))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].id").value(2));
+
+        //then
+
+    }
+
 }
