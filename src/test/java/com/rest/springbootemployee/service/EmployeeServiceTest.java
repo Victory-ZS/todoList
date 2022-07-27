@@ -88,6 +88,19 @@ public class EmployeeServiceTest {
         verify(employeeRepository,times(1)).delete(employeeRepository.findById(1));
     }
 
+    @Test
+    void should_a_Female_employee_when_get_given_employees() {
+        //given
+        Employee firstEmployee = new Employee(1,"Susan", 23, "Female", 9000);
+        given(employeeRepository.findById(1)).willReturn(firstEmployee);
+
+        //when
+        Employee employee = employeeService.findById(1);
+
+        //then
+        assertEquals(firstEmployee, employee);
+    }
+
 
 
 

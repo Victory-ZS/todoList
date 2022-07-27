@@ -83,7 +83,7 @@ public class EmployeeControllerTest {
     }
 
     @Test
-    void should_a_Male_employee_when_perform_get_given_employees() throws Exception {
+    void should_a_FeMale_employee_when_perform_get_given_employees() throws Exception {
         //given
         employeeRepository.insert(new Employee(1,"Sally", 22, "Female", 10000));
         employeeRepository.insert(new Employee(2,"Tom", 33, "Male", 20000));
