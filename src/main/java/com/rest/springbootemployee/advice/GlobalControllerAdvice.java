@@ -1,7 +1,7 @@
 package com.rest.springbootemployee.advice;
 
 import com.rest.springbootemployee.exception.EmployeeNotFoundException;
-import com.rest.springbootemployee.repository.CompanyNotFoundException;
+import com.rest.springbootemployee.exception.CompanyNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;

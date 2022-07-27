@@ -74,4 +74,8 @@ public class CompanyRepository {
         Company company = this.findCompanyById(id);
         companies.remove(company);
     }
+
+    public void clearAll() {
+        companies.clear();
+    }
 }
