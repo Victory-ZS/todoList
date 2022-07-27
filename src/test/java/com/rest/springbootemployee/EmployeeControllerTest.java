@@ -119,26 +119,59 @@ public class EmployeeControllerTest {
 
     }
 
+    @Test
+    void should_get_employees_when_perform_get_given_page_pageSize() throws Exception {
+        //given
+        employeeRepository.insert(new Employee(1,"Sally", 22, "Female", 10000));
+        employeeRepository.insert(new Employee(2,"Tom", 33, "Male", 20000));
+
+        //when
+        client.perform(MockMvcRequestBuilders.get("/employees")
+                        .param("page","1")
+                        .param("pageSize", "2"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(2)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").isNumber())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value("Sally"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].age").value(22))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].gender").value("Female"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].salary").value(10000));
+
+        //then
+
+    }
+
 //    @Test
-//    void should_get_employees_when_perform_get_given_page_pageSize() throws Exception {
+//    void should_update_employee_when_perform_get_given_employees() throws Exception {
 //        //given
 //        employeeRepository.insert(new Employee(1,"Sally", 22, "Female", 10000));
 //        employeeRepository.insert(new Employee(2,"Tom", 33, "Male", 20000));
-//
+//        String newEmployeeJson = "{\n" +
+//                "        \"name\": \"Lisa\",\n" +
+//                "        \"age\": 23,\n" +
+//                "        \"gender\": \"Female\",\n" +
+//                "        \"salary\": 12000\n" +
+//                "}";
 //        //when
-//        client.perform(MockMvcRequestBuilders.get("/employees")
-//                        .param("page","1"))
-//                .param("pageSize", "2")
+//        client.perform(MockMvcRequestBuilders.put("/employees/{id}", 1)     //request
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content(newEmployeeJson))
 //                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(2)))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").isNumber())
-//                .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value("Sally"))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$[0].age").value(22))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$[0].gender").value("Female"))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$[0].salary").value(10000));
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNumber())
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Lisa"))
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.age").value(23))
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.gender").value("Female"))
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.salary").value(12000));
 //
 //        //then
+//        List<Employee> employees = employeeRepository.findAll();
+//        assertThat(employees, hasSize(2));
+//        assertThat(employees.get(0).getName(), equalTo("Lisa"));
+//        assertThat(employees.get(0).getAge(), equalTo(23));
+//        assertThat(employees.get(0).getGender(), equalTo("Female"));
+//        assertThat(employees.get(0).getSalary(), equalTo(12000));
 //
 //    }
+
 
     @Test
     void should_delete_employee_by_id_1_when_perform_get_given_employees() throws Exception {
