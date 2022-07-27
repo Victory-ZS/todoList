@@ -62,10 +62,33 @@ public class CompanyControllerTest {
         companyRepository.insertCompany(new Company(2, "summer", employees));
 
         //when
-        client.perform(MockMvcRequestBuilders.get("/employees/{id}", 1))     //request
+        client.perform(MockMvcRequestBuilders.get("/companies/{id}", 1))     //request
 
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1));
+
+        //then
+
+    }
+
+    @Test
+    void should_get_employees_by_id_1_when_perform_get_given_companies() throws Exception {
+        //given
+        List<Employee> employees = new ArrayList<>();
+        employees.add(new Employee(1,"Lily1",12,"male",1000));
+        employees.add(new Employee(2,"Lily2",23,"female",2000));
+        companyRepository.insertCompany(new Company(1, "spring", employees));
+
+        //when
+        client.perform(MockMvcRequestBuilders.get("/companies/{id}/employees", 1))     //request
+
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(2)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(1))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value("Lily1"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].age").value(12))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].gender").value("male"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].salary").value(1000));
 
         //then
 
