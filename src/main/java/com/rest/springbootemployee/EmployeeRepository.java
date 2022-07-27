@@ -57,4 +57,8 @@ public class EmployeeRepository {
     public void delete(Employee employee) {
         employees.remove(employee);
     }
+
+    public void clearAll() {
+        employees.clear();
+    }
 }
