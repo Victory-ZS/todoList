@@ -43,6 +43,26 @@ public class CompanyServiceTest {
         //then
         assertEquals(2, companies.size());
         assertEquals(firstCompany, companies.get(0));
+    }
+
+    @Test
+    void should_return_a_company_by_id_1_when_find_all_given_companies() {
+        //given
+        List<Employee> employees = new ArrayList<>();
+        employees.add(new Employee(1,"Lily1",12,"male",1000));
+        employees.add(new Employee(2,"Lily2",23,"female",2000));
+        List<Company> preparedCompany = new ArrayList<>();
+        Company firstCompany = new Company(1, "spring", employees);
+        Company secondCompany = new Company(2, "summer", employees);
+        preparedCompany.add(firstCompany);
+        preparedCompany.add(secondCompany);
+        given(companyRepository.findCompanyById(1)).willReturn(firstCompany);
+
+        //when
+        Company  company = companyService.findCompanyById(1);
+
+        //then
+        assertEquals(firstCompany, company);
 
     }
 
