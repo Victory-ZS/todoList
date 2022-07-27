@@ -15,10 +15,13 @@ public class CompanyRepository {
 
     public CompanyRepository(){
         companies = new ArrayList<>();
-        companies.add(new Company(1, "spring", new Employee(1,"Lily1",12,"male",1000)));
-        companies.add(new Company(2, "summer", new Employee(2,"Lily2",23,"female",2000)));
-        companies.add(new Company(3, "autumn", new Employee(3,"Lily3",34,"male",3000)));
-        companies.add(new Company(4, "winter", new Employee(4,"Lily4",45,"female",4000)));
+        List<Employee> employees = new ArrayList<>();
+        employees.add(new Employee(1,"Lily1",12,"male",1000));
+        employees.add(new Employee(2,"Lily2",23,"female",2000));
+        companies.add(new Company(1, "spring", employees));
+        companies.add(new Company(2, "summer", employees));
+        companies.add(new Company(3, "autumn", employees));
+        companies.add(new Company(4, "winter", employees));
 
     }
     public List<Company> findAllCompanies() {
@@ -33,10 +36,7 @@ public class CompanyRepository {
     }
 
     public List<Employee> findEmployeesById(int id) {
-        return companies.stream().
-                filter(company -> company.getId() == id)
-                .map(Company::getEmployees)
-                .collect(Collectors.toList());
+        return findCompanyById(id).getEmployees();
     }
 
     public List<Company> findAllCompaniesByPage(int page, int pageSize) {

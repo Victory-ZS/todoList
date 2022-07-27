@@ -2,12 +2,14 @@ package com.rest.springbootemployee.company;
 
 import com.rest.springbootemployee.Employee;
 
+import java.util.List;
+
 public class Company {
     private int id;
     private String companyName;
-    private Employee employees;
+    private List<Employee> employees;
 
-    public Company(int id, String companyName, Employee employees) {
+    public Company(int id, String companyName, List<Employee> employees) {
         this.id = id;
         this.companyName = companyName;
         this.employees = employees;
@@ -29,11 +31,11 @@ public class Company {
         this.companyName = companyName;
     }
 
-    public Employee getEmployees() {
+    public List<Employee> getEmployees() {
         return employees;
     }
 
-    public void setEmployees(Employee employees) {
+    public void setEmployees(List<Employee> employees) {
         this.employees = employees;
     }
 }

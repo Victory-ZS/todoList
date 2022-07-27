@@ -50,7 +50,7 @@ public class EmployeeRepository {
     public int generateNewId(){
         int max = employees.stream()
                 .mapToInt(Employee::getId).max()
-                .orElseThrow(EmployeeNotFoundException::new);
+                .orElse(0);
         return max + 1;
     }
 
