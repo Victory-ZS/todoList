@@ -29,7 +29,7 @@ public class EmployeeController {
 //    GET       /employees/1                  # get a specific employee by ID
     @GetMapping("/{id}")
     public Employee findById(@PathVariable int id){
-        return employeeRepository.findById(id);
+        return employeeService.findById(id);
     }
 
 //    GET       /employees?gender=male        # get all male employees
