@@ -2,6 +2,7 @@ package com.rest.springbootemployee.controller;
 
 import com.rest.springbootemployee.entity.Employee;
 import com.rest.springbootemployee.repository.EmployeeRepository;
+import com.rest.springbootemployee.service.EmployeeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,15 +12,18 @@ import java.util.List;
 @RequestMapping("/employees")
 public class EmployeeController {
 
-    EmployeeRepository employeeRepository;
-    public EmployeeController(EmployeeRepository employeeRepository){
+    private final EmployeeRepository employeeRepository;
+    private EmployeeService employeeService;
+
+    public EmployeeController(EmployeeRepository employeeRepository, EmployeeService employeeService){
         this.employeeRepository = employeeRepository;
+        this.employeeService = employeeService;
     }
 
 //    GET       /employees                    # get employee list
     @GetMapping
     public List<Employee> findAll(){
-        return employeeRepository.findAll();
+        return employeeService.findAll();
     }
 
 //    GET       /employees/1                  # get a specific employee by ID
@@ -44,7 +48,7 @@ public class EmployeeController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Employee create(@RequestBody Employee employee){
-        return employeeRepository.insert(employee);
+        return employeeService.insert(employee);
     }
 
 //    PUT       /employees/1                  # update an employee
