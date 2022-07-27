@@ -119,7 +119,22 @@ public class EmployeeServiceTest {
         assertEquals(firstEmployee, femaleEmployees.get(0));
     }
 
+    @Test
+    void should_employees_employee_when_get_given_page_pageSize() {
+        //given
+        List<Employee> preparedEmployees = new ArrayList<>();
+        Employee firstEmployee = new Employee(1,"Susan", 20, "Female", 9000);
+        Employee secondEmployee = new Employee(2,"Tom", 30, "Male", 9000);
+        preparedEmployees.add(firstEmployee);
+        preparedEmployees.add(secondEmployee);
+        given(employeeRepository.findByPage(1,2)).willReturn(preparedEmployees);
 
+        //when
+        List<Employee>  employees = employeeService.findByPage(1,2);
 
-
+        //then
+        assertEquals(2, employees.size());
+        assertEquals(firstEmployee, employees.get(0));
+        assertEquals(secondEmployee, employees.get(1));
+    }
 }
