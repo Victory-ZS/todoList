@@ -96,7 +96,7 @@ public class CompanyControllerTest {
     }
 
     @Test
-    void should_get_companies_when_perform_get_page_pageSize() throws Exception {
+    void should_get_companies_when_perform_get_given_page_pageSize() throws Exception {
         //given
         List<Employee> employees = new ArrayList<>();
         employees.add(new Employee(1,"Lily1",12,"male",1000));
@@ -116,7 +116,7 @@ public class CompanyControllerTest {
     }
 
     @Test
-    void should_create_company_when_perform_get_company() throws Exception {
+    void should_create_company_when_perform_get_given_company() throws Exception {
         //given
         String newCompanyJson = "{\n" +
                 "    \"id\": 1,\n" +
@@ -143,7 +143,6 @@ public class CompanyControllerTest {
         client.perform(MockMvcRequestBuilders.post("/companies")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(newCompanyJson))
-                .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.companyName").value("spring"));
 
@@ -152,6 +151,49 @@ public class CompanyControllerTest {
         assertThat(companies, hasSize(1));
         assertThat(companies.get(0).getId(), equalTo(1));
         assertThat(companies.get(0).getCompanyName(), equalTo("spring"));
+    }
+
+    @Test
+    void should_update_company_when_perform_get_given_company() throws Exception {
+        //given
+        List<Employee> employees = new ArrayList<>();
+        employees.add(new Employee(1,"Lily1",12,"male",1000));
+        employees.add(new Employee(2,"Lily2",23,"female",2000));
+        companyRepository.insertCompany(new Company(1, "spring", employees));
+        String newCompanyJson = "{\n" +
+                "    \"id\": 1,\n" +
+                "    \"companyName\": \"summer\",\n" +
+                "    \"employees\": [\n" +
+                "        {\n" +
+                "            \"id\": 1,\n" +
+                "            \"name\": \"Lily1\",\n" +
+                "            \"age\": 12,\n" +
+                "            \"gender\": \"male\",\n" +
+                "            \"salary\": 1000\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"id\": 2,\n" +
+                "            \"name\": \"Lily2\",\n" +
+                "            \"age\": 23,\n" +
+                "            \"gender\": \"female\",\n" +
+                "            \"salary\": 2000\n" +
+                "        }\n" +
+                "    ]\n" +
+                "}";
+
+        //when
+        client.perform(MockMvcRequestBuilders.put("/companies/{id}",1)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(newCompanyJson))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.companyName").value("summer"));
+
+        //then
+        List<Company> companies = companyRepository.findAllCompanies();
+        assertThat(companies, hasSize(1));
+        assertThat(companies.get(0).getId(), equalTo(1));
+        assertThat(companies.get(0).getCompanyName(), equalTo("summer"));
     }
 
 }
