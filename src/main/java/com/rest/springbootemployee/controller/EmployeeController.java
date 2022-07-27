@@ -12,11 +12,11 @@ import java.util.List;
 @RequestMapping("/employees")
 public class EmployeeController {
 
-    private final EmployeeRepository employeeRepository;
-    private EmployeeService employeeService;
+//    private final EmployeeRepository employeeRepository;
+    private final EmployeeService employeeService;
 
-    public EmployeeController(EmployeeRepository employeeRepository, EmployeeService employeeService){
-        this.employeeRepository = employeeRepository;
+    public EmployeeController(EmployeeService employeeService){
+//        this.employeeRepository = employeeRepository;
         this.employeeService = employeeService;
     }
 
