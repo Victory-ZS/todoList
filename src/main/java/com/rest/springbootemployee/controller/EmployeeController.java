@@ -54,7 +54,7 @@ public class EmployeeController {
 //    PUT       /employees/1                  # update an employee
     @PutMapping("/{id}")
     public Employee update(@PathVariable int id, @RequestBody Employee employeeToUpdate){
-        Employee existingEmployee = employeeRepository.findById(id);
+        Employee existingEmployee = employeeService.findById(id);
         if (employeeToUpdate.getAge() != null){
             existingEmployee.setAge(employeeToUpdate.getAge());
         }
@@ -67,8 +67,8 @@ public class EmployeeController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id){
-        Employee employee = employeeRepository.findById(id);
-        employeeRepository.delete(employee);
+        Employee employee = employeeService.findById(id);
+        employeeService.delete(employee.getId());
     }
 
 }
