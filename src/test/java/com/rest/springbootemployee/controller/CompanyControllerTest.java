@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -15,6 +16,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 
 @SpringBootTest
@@ -68,7 +71,6 @@ public class CompanyControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1));
 
         //then
-
     }
 
     @Test
@@ -91,7 +93,6 @@ public class CompanyControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].salary").value(1000));
 
         //then
-
     }
 
     @Test
@@ -107,13 +108,50 @@ public class CompanyControllerTest {
         client.perform(MockMvcRequestBuilders.get("/companies")
                         .param("page","1")
                         .param("pageSize", "2"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(2)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(1))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].id").value(2));
 
         //then
+    }
 
+    @Test
+    void should_create_company_when_perform_get_company() throws Exception {
+        //given
+        String newCompanyJson = "{\n" +
+                "    \"id\": 1,\n" +
+                "    \"companyName\": \"spring\",\n" +
+                "    \"employees\": [\n" +
+                "        {\n" +
+                "            \"id\": 1,\n" +
+                "            \"name\": \"Lily1\",\n" +
+                "            \"age\": 12,\n" +
+                "            \"gender\": \"male\",\n" +
+                "            \"salary\": 1000\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"id\": 2,\n" +
+                "            \"name\": \"Lily2\",\n" +
+                "            \"age\": 23,\n" +
+                "            \"gender\": \"female\",\n" +
+                "            \"salary\": 2000\n" +
+                "        }\n" +
+                "    ]\n" +
+                "}";
+
+        //when
+        client.perform(MockMvcRequestBuilders.post("/companies")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(newCompanyJson))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.companyName").value("spring"));
+
+        //then
+        List<Company> companies = companyRepository.findAllCompanies();
+        assertThat(companies, hasSize(1));
+        assertThat(companies.get(0).getId(), equalTo(1));
+        assertThat(companies.get(0).getCompanyName(), equalTo("spring"));
     }
 
 }
