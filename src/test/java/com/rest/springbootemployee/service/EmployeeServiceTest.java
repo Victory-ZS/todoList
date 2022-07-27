@@ -89,7 +89,7 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    void should_a_Female_employee_when_get_given_employees() {
+    void should_a_employee_by_id_1_employee_when_get_given_employees() {
         //given
         Employee firstEmployee = new Employee(1,"Susan", 23, "Female", 9000);
         given(employeeRepository.findById(1)).willReturn(firstEmployee);
@@ -99,6 +99,24 @@ public class EmployeeServiceTest {
 
         //then
         assertEquals(firstEmployee, employee);
+    }
+
+    @Test
+    void should_a_Female_employee_when_get_given_employees() {
+        //given
+        List<Employee> preparedEmployees = new ArrayList<>();
+        Employee firstEmployee = new Employee(1,"Susan", 20, "Female", 9000);
+//        Employee secondEmployee = new Employee(2,"Tom", 30, "Male", 9000);
+        preparedEmployees.add(firstEmployee);
+//        preparedEmployees.add(secondEmployee);
+        given(employeeRepository.findByGender("Female")).willReturn(preparedEmployees);
+
+        //when
+        List<Employee>  femaleEmployees = employeeService.findByGender("Female");
+
+        //then
+        assertEquals(1, femaleEmployees.size());
+        assertEquals(firstEmployee, femaleEmployees.get(0));
     }
 
 
