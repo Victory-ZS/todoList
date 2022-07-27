@@ -41,7 +41,7 @@ public class EmployeeController {
 //    GET       /employees?page=1&pageSize=5  # Page query, page equals 1, pageSize equals 5
     @GetMapping(params = {"page","pageSize"})
     public List<Employee> findByPage(@RequestParam int page, @RequestParam int pageSize){
-        return employeeRepository.findByPage(page, pageSize);
+        return employeeService.findByPage(page, pageSize);
     }
 
 //    POST      /employees                    # add an employee
