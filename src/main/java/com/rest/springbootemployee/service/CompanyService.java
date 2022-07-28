@@ -2,8 +2,11 @@ package com.rest.springbootemployee.service;
 
 import com.rest.springbootemployee.entity.Company;
 import com.rest.springbootemployee.entity.Employee;
+import com.rest.springbootemployee.exception.CompanyNotFoundException;
+import com.rest.springbootemployee.exception.EmployeeNotFoundException;
 import com.rest.springbootemployee.repository.CompanyJpaRepository;
 import com.rest.springbootemployee.repository.InMemoryCompanyRepository;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,11 +26,12 @@ public class CompanyService {
     }
 
     public Company findCompanyById(int id) {
-        return companyRepository.findCompanyById(id);
+        return companyJpaRepository.findById(id)
+                .orElseThrow(CompanyNotFoundException::new);
     }
 
     public List<Company> findAllCompaniesByPage(int page, int pageSize) {
-        return companyRepository.findAllCompaniesByPage(page, pageSize);
+        return companyJpaRepository.findAll(PageRequest.of(page, pageSize)).toList();
     }
 
     public Company insertCompany(Company company) {
@@ -35,21 +39,26 @@ public class CompanyService {
     }
 
     public Company updateCompany(int id, Company companyToUpdate) {
-        Company company = companyRepository.findCompanyById(id);
+        Company company = this.findCompanyById(id);
         if (companyToUpdate.getCompanyName() != null){
             company.setCompanyName(companyToUpdate.getCompanyName());
         }
         if (companyToUpdate.getEmployees() != null){
             company.setEmployees(companyToUpdate.getEmployees());
         }
+        companyJpaRepository.save(company);
         return company;
     }
 
     public void deleteCompanyById(int id) {
-        companyRepository.deleteCompanyById(id);
+        boolean exists = companyJpaRepository.existsById(id);
+        if(! companyJpaRepository.existsById(id)){
+            throw new CompanyNotFoundException();
+        }
+        companyJpaRepository.deleteById(id);
     }
 
     public List<Employee> findEmployeesById(int id) {
-        return companyRepository.findEmployeesById(id);
+        return companyJpaRepository.findEmployeesById(id);
     }
 }

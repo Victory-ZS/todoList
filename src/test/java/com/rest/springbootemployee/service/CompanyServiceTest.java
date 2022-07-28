@@ -2,27 +2,30 @@ package com.rest.springbootemployee.service;
 
 import com.rest.springbootemployee.entity.Company;
 import com.rest.springbootemployee.entity.Employee;
+import com.rest.springbootemployee.exception.CompanyNotFoundException;
 import com.rest.springbootemployee.repository.CompanyJpaRepository;
 import com.rest.springbootemployee.repository.InMemoryCompanyRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(SpringExtension.class)
 public class CompanyServiceTest {
-
-    @Mock
-    InMemoryCompanyRepository companyRepository;
 
     @Mock
     CompanyJpaRepository companyJpaRepository;
@@ -59,7 +62,7 @@ public class CompanyServiceTest {
         employees.add(new Employee(2,"Lily2",23,"female",2000));
         Company firstCompany = new Company(1, "spring", employees);
         Company secondCompany = new Company(2, "summer", employees);
-        given(companyRepository.findCompanyById(1)).willReturn(firstCompany);
+        given(companyJpaRepository.findById(1)).willReturn(Optional.of(firstCompany));
 
         //when
         Company  company = companyService.findCompanyById(1);
@@ -80,7 +83,7 @@ public class CompanyServiceTest {
         List<Company> preparedCompanies = new ArrayList<>();
         preparedCompanies.add(firstCompany);
         preparedCompanies.add(secondCompany);
-        given(companyRepository.findAllCompaniesByPage(1, 2)).willReturn(preparedCompanies);
+        given(companyJpaRepository.findAll(PageRequest.of(1, 2))).willReturn(new PageImpl<>(preparedCompanies));
 
         //when
         List<Company>  companies = companyService.findAllCompaniesByPage(1,2);
@@ -117,7 +120,7 @@ public class CompanyServiceTest {
         Company firstCompany = new Company(1, "spring", employees);
         Company secondCompany = new Company(1, "summer", employees);
 
-        given(companyRepository.findCompanyById(1)).willReturn(firstCompany);
+        given(companyJpaRepository.findById(1)).willReturn(Optional.of(firstCompany));
 
         //when
         Company  newCompany = companyService.updateCompany(1,secondCompany);
@@ -129,13 +132,26 @@ public class CompanyServiceTest {
 
     @Test
     void should_delete_company_when_perform_get_given_id() {
-        //given =
+        //given
+        given(companyJpaRepository.existsById(1)).willReturn(true);
 
         //when
         companyService.deleteCompanyById(1);
 
         //then
-        verify(companyRepository,times(1)).deleteCompanyById(1);
+        verify(companyJpaRepository,times(1)).deleteById(1);
+
+    }
+
+    @Test
+    void should_throw_CompanyNotFoundException_when_delete_company_given_not_exist_id() {
+        //given
+        given(companyJpaRepository.existsById(any())).willReturn(false);
+
+        //when
+
+        //then
+        assertThrows(CompanyNotFoundException.class,() -> companyService.deleteCompanyById(9999));
 
     }
 
@@ -146,7 +162,7 @@ public class CompanyServiceTest {
         Employee employee = new Employee(1,"Lily1",12,"male",1000);
         employees.add(employee);
         Company company = new Company(1, "spring", employees);
-        given(companyRepository.findEmployeesById(1)).willReturn(employees);
+        given(companyJpaRepository.findEmployeesById(1)).willReturn(employees);
 
         //when
         List<Employee>  newEmployees = companyService.findEmployeesById(1);

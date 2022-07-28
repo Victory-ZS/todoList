@@ -21,9 +21,6 @@ import static org.mockito.Mockito.*;
 public class EmployeeServiceTest {
 
     @Mock
-    InMemoryEmployeeRepository employeeRepository;
-
-    @Mock
     EmployeeJpaRepository employeeJpaRepository;
 
     @InjectMocks
@@ -81,17 +78,16 @@ public class EmployeeServiceTest {
 
     }
 
-//    @Test
-//    void should_call_repository_delete_when_delete_given_by_id() {
-//        //given
-//        given(employeeJpaRepository.existsById(any())).willReturn(true);
-//        doNothing().when(employeeJpaRepository).deleteById(any());
-//        //when
-//        employeeService.delete(1);
-//
-//        //then
-//        verify(employeeJpaRepository,times(1)).delete(employeeRepository.findById(1));
-//    }
+    @Test
+    void should_call_repository_delete_when_delete_given_by_id() {
+        //given
+        given(employeeJpaRepository.existsById(any())).willReturn(true);
+        //when
+        employeeService.delete(1);
+
+        //then
+        verify(employeeJpaRepository,times(1)).deleteById(1);
+    }
 
     @Test
     void should_a_employee_by_id_1_employee_when_get_given_employees() {
