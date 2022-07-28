@@ -51,11 +51,8 @@ public class CompanyServiceTest {
         List<Employee> employees = new ArrayList<>();
         employees.add(new Employee(1,"Lily1",12,"male",1000));
         employees.add(new Employee(2,"Lily2",23,"female",2000));
-        List<Company> preparedCompany = new ArrayList<>();
         Company firstCompany = new Company(1, "spring", employees);
         Company secondCompany = new Company(2, "summer", employees);
-        preparedCompany.add(firstCompany);
-        preparedCompany.add(secondCompany);
         given(companyRepository.findCompanyById(1)).willReturn(firstCompany);
 
         //when
@@ -63,6 +60,27 @@ public class CompanyServiceTest {
 
         //then
         assertEquals(firstCompany, company);
+
+    }
+
+    @Test
+    void should_get_companies_when_perform_get_given_page_pageSize() {
+        //given
+        List<Employee> employees = new ArrayList<>();
+        employees.add(new Employee(1,"Lily1",12,"male",1000));
+        employees.add(new Employee(2,"Lily2",23,"female",2000));
+        Company firstCompany = new Company(1, "spring", employees);
+        Company secondCompany = new Company(2, "summer", employees);
+        List<Company> preparedCompanies = new ArrayList<>();
+        preparedCompanies.add(firstCompany);
+        preparedCompanies.add(secondCompany);
+        given(companyRepository.findAllCompaniesByPage(1, 2)).willReturn(preparedCompanies);
+
+        //when
+        List<Company>  companies = companyService.findAllCompaniesByPage(1,2);
+
+        //then
+        assertEquals(preparedCompanies, companies);
 
     }
 

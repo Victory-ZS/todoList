@@ -20,4 +20,8 @@ public class CompanyService {
     public Company findCompanyById(int id) {
         return companyRepository.findCompanyById(id);
     }
+
+    public List<Company> findAllCompaniesByPage(int page, int pageSize) {
+        return companyRepository.findAllCompaniesByPage(page, pageSize);
+    }
 }
