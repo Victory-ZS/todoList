@@ -14,6 +14,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(SpringExtension.class)
 public class CompanyServiceTest {
@@ -118,6 +120,25 @@ public class CompanyServiceTest {
 
         //then
         assertEquals(firstCompany, newCompany);
+
+    }
+
+    @Test
+    void should_delete_company_when_perform_get_given_id() {
+        //given
+//        List<Employee> employees = new ArrayList<>();
+//        employees.add(new Employee(1,"Lily1",12,"male",1000));
+//        employees.add(new Employee(2,"Lily2",23,"female",2000));
+//        Company firstCompany = new Company(1, "spring", employees);
+//
+//        given(companyRepository.deleteCompanyById(companyRepository.findCompanyById(1))).willReturn(firstCompany);
+//        companyService.delete
+
+        //when
+        companyService.delete(1);
+
+        //then
+        verify(companyRepository,times(1)).deleteCompanyById(1);
 
     }
 

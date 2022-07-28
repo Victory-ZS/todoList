@@ -39,4 +39,8 @@ public class CompanyService {
         }
         return company;
     }
+
+    public void delete(int id) {
+        companyRepository.deleteCompanyById(id);
+    }
 }
