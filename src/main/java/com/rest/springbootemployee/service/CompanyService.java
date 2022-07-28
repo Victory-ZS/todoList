@@ -1,6 +1,7 @@
 package com.rest.springbootemployee.service;
 
 import com.rest.springbootemployee.entity.Company;
+import com.rest.springbootemployee.entity.Employee;
 import com.rest.springbootemployee.repository.CompanyRepository;
 
 import java.util.List;
@@ -42,5 +43,9 @@ public class CompanyService {
 
     public void delete(int id) {
         companyRepository.deleteCompanyById(id);
+    }
+
+    public List<Employee> findEmployeesById(int id) {
+        return companyRepository.findEmployeesById(id);
     }
 }

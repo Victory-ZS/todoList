@@ -27,7 +27,7 @@ public class CompanyServiceTest {
     CompanyService companyService;
 
     @Test
-    void should_return_all_when_find_all_given_employees() {
+    void should_return_all_when_find_all_given_companies() {
         //given
         List<Employee> employees = new ArrayList<>();
         employees.add(new Employee(1,"Lily1",12,"male",1000));
@@ -126,19 +126,29 @@ public class CompanyServiceTest {
     @Test
     void should_delete_company_when_perform_get_given_id() {
         //given
-//        List<Employee> employees = new ArrayList<>();
-//        employees.add(new Employee(1,"Lily1",12,"male",1000));
-//        employees.add(new Employee(2,"Lily2",23,"female",2000));
-//        Company firstCompany = new Company(1, "spring", employees);
-//
-//        given(companyRepository.deleteCompanyById(companyRepository.findCompanyById(1))).willReturn(firstCompany);
-//        companyService.delete
 
         //when
         companyService.delete(1);
 
         //then
         verify(companyRepository,times(1)).deleteCompanyById(1);
+
+    }
+
+    @Test
+    void should_get_employees_by_id_1_when_perform_get_given_companies() {
+        //given
+        List<Employee> employees = new ArrayList<>();
+        Employee employee = new Employee(1,"Lily1",12,"male",1000);
+        employees.add(employee);
+        Company company = new Company(1, "spring", employees);
+        given(companyRepository.findEmployeesById(1)).willReturn(employees);
+
+        //when
+        List<Employee>  newEmployees = companyService.findEmployeesById(1);
+
+        //then
+        assertEquals(employees,newEmployees);
 
     }
 
