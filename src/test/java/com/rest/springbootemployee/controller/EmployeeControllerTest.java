@@ -44,7 +44,7 @@ public class EmployeeControllerTest {
         employeeJpaRepository.deleteAll();
         companyJpaRepository.deleteAll();
         Company company = new Company();
-        company.setCompanyName("afs");
+        company.setCompanyName("cool");
         preparedCompany = companyJpaRepository.save(company);
 
     }

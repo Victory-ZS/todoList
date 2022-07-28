@@ -15,8 +15,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(SpringExtension.class)
 public class EmployeeServiceTest {
@@ -85,9 +84,11 @@ public class EmployeeServiceTest {
 //    @Test
 //    void should_call_repository_delete_when_delete_given_by_id() {
 //        //given
-//        given(employeeJpaRepository.existsById(1)).willReturn(true);
+//        given(employeeJpaRepository.existsById(any())).willReturn(true);
+//        doNothing().when(employeeJpaRepository).deleteById(any());
 //        //when
 //        employeeService.delete(1);
+//
 //        //then
 //        verify(employeeJpaRepository,times(1)).delete(employeeRepository.findById(1));
 //    }
