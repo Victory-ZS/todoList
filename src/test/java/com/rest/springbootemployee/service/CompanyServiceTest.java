@@ -98,7 +98,7 @@ public class CompanyServiceTest {
         employees.add(new Employee(2,"Lily2",23,"female",2000));
         Company firstCompany = new Company(1, "spring", employees);
 
-        given(companyRepository.insertCompany(firstCompany)).willReturn(firstCompany);
+        given(companyJpaRepository.save(firstCompany)).willReturn(firstCompany);
 
         //when
         Company  newCompany = companyService.insertCompany(firstCompany);

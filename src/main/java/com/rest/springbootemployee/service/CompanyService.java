@@ -31,7 +31,7 @@ public class CompanyService {
     }
 
     public Company insertCompany(Company company) {
-        return companyRepository.insertCompany(company);
+        return companyJpaRepository.save(company);
     }
 
     public Company updateCompany(int id, Company companyToUpdate) {
