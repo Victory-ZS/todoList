@@ -102,5 +102,24 @@ public class CompanyServiceTest {
 
     }
 
+    @Test
+    void should_update_company_when_perform_get_given_company() {
+        //given
+        List<Employee> employees = new ArrayList<>();
+        employees.add(new Employee(1,"Lily1",12,"male",1000));
+        employees.add(new Employee(2,"Lily2",23,"female",2000));
+        Company firstCompany = new Company(1, "spring", employees);
+        Company secondCompany = new Company(1, "summer", employees);
+
+        given(companyRepository.findCompanyById(1)).willReturn(firstCompany);
+
+        //when
+        Company  newCompany = companyService.updateCompany(1,secondCompany);
+
+        //then
+        assertEquals(firstCompany, newCompany);
+
+    }
+
 
 }

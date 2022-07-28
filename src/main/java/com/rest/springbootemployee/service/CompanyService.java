@@ -28,4 +28,15 @@ public class CompanyService {
     public Company insertCompany(Company company) {
         return companyRepository.insertCompany(company);
     }
+
+    public Company updateCompany(int id, Company companyToUpdate) {
+        Company company = companyRepository.findCompanyById(id);
+        if (companyToUpdate.getCompanyName() != null){
+            company.setCompanyName(companyRepository.findCompanyById(id).getCompanyName());
+        }
+        if (companyToUpdate.getEmployees() != null){
+            companyRepository.findCompanyById(id).setEmployees(companyToUpdate.getEmployees());
+        }
+        return company;
+    }
 }
