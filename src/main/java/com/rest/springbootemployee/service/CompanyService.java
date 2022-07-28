@@ -12,11 +12,11 @@ import java.util.List;
 @Service
 public class CompanyService {
 
-    private InMemoryCompanyRepository companyRepository;
+//    private InMemoryCompanyRepository companyRepository;
     private CompanyJpaRepository companyJpaRepository;
 
-    public CompanyService(InMemoryCompanyRepository companyRepository, CompanyJpaRepository companyJpaRepository) {
-        this.companyRepository = companyRepository;
+    public CompanyService(CompanyJpaRepository companyJpaRepository) {
+//        this.companyRepository = companyRepository;
         this.companyJpaRepository = companyJpaRepository;
     }
 
