@@ -3,7 +3,6 @@ package com.rest.springbootemployee.service;
 import com.rest.springbootemployee.entity.Company;
 import com.rest.springbootemployee.entity.Employee;
 import com.rest.springbootemployee.exception.CompanyNotFoundException;
-import com.rest.springbootemployee.exception.EmployeeNotFoundException;
 import com.rest.springbootemployee.repository.CompanyJpaRepository;
 import com.rest.springbootemployee.repository.InMemoryCompanyRepository;
 import org.springframework.data.domain.PageRequest;

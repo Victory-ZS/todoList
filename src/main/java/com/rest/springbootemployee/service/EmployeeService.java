@@ -12,11 +12,9 @@ import java.util.List;
 @Service
 public class EmployeeService {
 
-    private final InMemoryEmployeeRepository employeeRepository;
     private final EmployeeJpaRepository employeeJpaRepository;
 
-    public EmployeeService(InMemoryEmployeeRepository employeeRepository, EmployeeJpaRepository employeeJpaRepository) {
-        this.employeeRepository = employeeRepository;
+    public EmployeeService(EmployeeJpaRepository employeeJpaRepository) {
         this.employeeJpaRepository = employeeJpaRepository;
     }
 
