@@ -24,4 +24,8 @@ public class CompanyService {
     public List<Company> findAllCompaniesByPage(int page, int pageSize) {
         return companyRepository.findAllCompaniesByPage(page, pageSize);
     }
+
+    public Company insertCompany(Company company) {
+        return companyRepository.insertCompany(company);
+    }
 }

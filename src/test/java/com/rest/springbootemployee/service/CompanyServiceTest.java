@@ -84,6 +84,23 @@ public class CompanyServiceTest {
 
     }
 
+    @Test
+    void should_create_company_when_perform_get_given_company() {
+        //given
+        List<Employee> employees = new ArrayList<>();
+        employees.add(new Employee(1,"Lily1",12,"male",1000));
+        employees.add(new Employee(2,"Lily2",23,"female",2000));
+        Company firstCompany = new Company(1, "spring", employees);
+
+        given(companyRepository.insertCompany(firstCompany)).willReturn(firstCompany);
+
+        //when
+        Company  newCompany = companyService.insertCompany(firstCompany);
+
+        //then
+        assertEquals(firstCompany, newCompany);
+
+    }
 
 
 }
