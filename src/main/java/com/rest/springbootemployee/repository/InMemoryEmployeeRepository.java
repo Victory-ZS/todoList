@@ -13,10 +13,10 @@ public class InMemoryEmployeeRepository {
     private List<Employee> employees;
     public InMemoryEmployeeRepository(){
         employees = new ArrayList<>();
-        employees.add(new Employee(1,"Lily1",23,"male",1000));
-        employees.add(new Employee(2,"Lily2",23,"female",1000));
-        employees.add(new Employee(3,"Lily3",23,"male",1000));
-        employees.add(new Employee(4,"Lily4",23,"female",1000));
+        employees.add(new Employee(1,"Lily1",23,"male",1000,100));
+        employees.add(new Employee(2,"Lily2",23,"female",1000,109));
+        employees.add(new Employee(3,"Lily3",23,"male",1000,103));
+        employees.add(new Employee(4,"Lily4",23,"female",1000,105));
     }
 
     public List<Employee> findAll(){

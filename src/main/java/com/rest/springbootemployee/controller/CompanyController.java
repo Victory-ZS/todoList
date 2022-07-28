@@ -2,7 +2,7 @@ package com.rest.springbootemployee.controller;
 
 import com.rest.springbootemployee.entity.Employee;
 import com.rest.springbootemployee.entity.Company;
-import com.rest.springbootemployee.repository.CompanyRepository;
+import com.rest.springbootemployee.repository.InMemoryCompanyRepository;
 import com.rest.springbootemployee.service.CompanyService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -12,9 +12,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/companies")
 public class CompanyController {
-    private final CompanyRepository companyRepository ;
+    private final InMemoryCompanyRepository companyRepository ;
     private final CompanyService companyService;
-    public CompanyController(CompanyRepository companyRepository, CompanyService companyService){
+    public CompanyController(InMemoryCompanyRepository companyRepository, CompanyService companyService){
         this.companyRepository = companyRepository;
         this.companyService = companyService;
     }

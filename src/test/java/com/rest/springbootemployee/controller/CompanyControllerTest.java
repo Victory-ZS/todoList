@@ -2,7 +2,7 @@ package com.rest.springbootemployee.controller;
 
 import com.rest.springbootemployee.entity.Company;
 import com.rest.springbootemployee.entity.Employee;
-import com.rest.springbootemployee.repository.CompanyRepository;
+import com.rest.springbootemployee.repository.InMemoryCompanyRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class CompanyControllerTest {
     MockMvc client;
 
     @Autowired
-    CompanyRepository companyRepository;
+    InMemoryCompanyRepository companyRepository;
 
     @BeforeEach
     void clearCompanyInRepository(){   //first do
@@ -38,8 +38,8 @@ public class CompanyControllerTest {
     void should_get_all_companies_when_perform_get_given_companies() throws Exception {
         //given
         List<Employee> employees = new ArrayList<>();
-        employees.add(new Employee(1,"Lily1",12,"male",1000));
-        employees.add(new Employee(2,"Lily2",23,"female",2000));
+        employees.add(new Employee(1,"Lily1",12,"male",1000,101));
+        employees.add(new Employee(2,"Lily2",23,"female",2000,101));
         companyRepository.insertCompany(new Company(1, "spring", employees));
 
         //when
@@ -58,8 +58,8 @@ public class CompanyControllerTest {
     void should_get_company_by_id_1_when_perform_get_given_companies() throws Exception {
         //given
         List<Employee> employees = new ArrayList<>();
-        employees.add(new Employee(1,"Lily1",12,"male",1000));
-        employees.add(new Employee(2,"Lily2",23,"female",2000));
+        employees.add(new Employee(1,"Lily1",12,"male",1000,101));
+        employees.add(new Employee(2,"Lily2",23,"female",2000,101));
         companyRepository.insertCompany(new Company(1, "spring", employees));
         companyRepository.insertCompany(new Company(2, "summer", employees));
 
@@ -76,8 +76,8 @@ public class CompanyControllerTest {
     void should_get_employees_by_id_1_when_perform_get_given_companies() throws Exception {
         //given
         List<Employee> employees = new ArrayList<>();
-        employees.add(new Employee(1,"Lily1",12,"male",1000));
-        employees.add(new Employee(2,"Lily2",23,"female",2000));
+        employees.add(new Employee(1,"Lily1",12,"male",1000,101));
+        employees.add(new Employee(2,"Lily2",23,"female",2000,991));
         companyRepository.insertCompany(new Company(1, "spring", employees));
 
         //when
@@ -98,8 +98,8 @@ public class CompanyControllerTest {
     void should_get_companies_when_perform_get_given_page_pageSize() throws Exception {
         //given
         List<Employee> employees = new ArrayList<>();
-        employees.add(new Employee(1,"Lily1",12,"male",1000));
-        employees.add(new Employee(2,"Lily2",23,"female",2000));
+        employees.add(new Employee(1,"Lily1",12,"male",1000,100));
+        employees.add(new Employee(2,"Lily2",23,"female",2000,34));
         companyRepository.insertCompany(new Company(1, "spring", employees));
         companyRepository.insertCompany(new Company(2, "summer", employees));
 
@@ -156,8 +156,8 @@ public class CompanyControllerTest {
     void should_update_company_when_perform_get_given_company() throws Exception {
         //given
         List<Employee> employees = new ArrayList<>();
-        employees.add(new Employee(1,"Lily1",12,"male",1000));
-        employees.add(new Employee(2,"Lily2",23,"female",2000));
+        employees.add(new Employee(1,"Lily1",12,"male",1000,90));
+        employees.add(new Employee(2,"Lily2",23,"female",2000,999));
         companyRepository.insertCompany(new Company(1, "spring", employees));
         String newCompanyJson = "{\n" +
                 "    \"id\": 1,\n" +
@@ -199,8 +199,8 @@ public class CompanyControllerTest {
     void should_delete_company_when_perform_get_given_id() throws Exception {
         //given
         List<Employee> employees = new ArrayList<>();
-        employees.add(new Employee(1,"Lily1",12,"male",1000));
-        employees.add(new Employee(2,"Lily2",23,"female",2000));
+        employees.add(new Employee(1,"Lily1",12,"male",1000,89));
+        employees.add(new Employee(2,"Lily2",23,"female",2000,78));
         companyRepository.insertCompany(new Company(1, "spring", employees));
         companyRepository.insertCompany(new Company(2, "summer", employees));
 

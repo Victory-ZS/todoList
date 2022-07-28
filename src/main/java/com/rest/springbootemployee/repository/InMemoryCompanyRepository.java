@@ -10,15 +10,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Repository
-public class CompanyRepository {
+public class InMemoryCompanyRepository {
 
     public List<Company> companies;
 
-    public CompanyRepository(){
+    public InMemoryCompanyRepository(){
         companies = new ArrayList<>();
         List<Employee> employees = new ArrayList<>();
-        employees.add(new Employee(1,"Lily1",12,"male",1000));
-        employees.add(new Employee(2,"Lily2",23,"female",2000));
+        employees.add(new Employee(1,"Lily1",12,"male",1000, 100));
+        employees.add(new Employee(2,"Lily2",23,"female",2000, 101));
         companies.add(new Company(1, "spring", employees));
         companies.add(new Company(2, "summer", employees));
         companies.add(new Company(3, "autumn", employees));

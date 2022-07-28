@@ -1,11 +1,13 @@
 package com.rest.springbootemployee.service;
 
 import com.rest.springbootemployee.entity.Employee;
+import com.rest.springbootemployee.repository.EmployeeJpaRepository;
 import com.rest.springbootemployee.repository.InMemoryEmployeeRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.data.domain.Page;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
@@ -22,6 +24,9 @@ public class EmployeeServiceTest {
     @Mock
     InMemoryEmployeeRepository employeeRepository;
 
+    @Mock
+    EmployeeJpaRepository employeeJpaRepository;
+
     @InjectMocks
     EmployeeService employeeService;
 
@@ -34,7 +39,7 @@ public class EmployeeServiceTest {
         Employee secondEmployee = new Employee(2,"Tom", 23, "Female", 9000);
         preparedEmployees.add(firstEmployee);
         preparedEmployees.add(secondEmployee);
-        given(employeeRepository.findAll()).willReturn(preparedEmployees);
+        given(employeeJpaRepository.findAll()).willReturn(preparedEmployees);
 
         //when
         List<Employee>  employees = employeeService.findAll();
@@ -50,7 +55,7 @@ public class EmployeeServiceTest {
         //given
         Employee employeeToUpdate = new Employee(1,"Susan", 20, "Female", 9000);
         Employee employeeToUpdateRequest = new Employee(1,"Susan", 40, "Female", 90000);
-        given(employeeRepository.findById(1)).willReturn(employeeToUpdate);
+        given(employeeJpaRepository.findById(1)).willReturn(java.util.Optional.of(employeeToUpdate)); //??????
         //when
         employeeService.update(1,employeeToUpdateRequest);
 
@@ -66,7 +71,7 @@ public class EmployeeServiceTest {
     void should_create_employee_when_post_given_a_new_employee() {
         //given
         Employee employee = new Employee(2,"Tom", 23, "Male", 90000);
-        given(employeeRepository.insert(employee)).willReturn(employee);
+        given(employeeJpaRepository.save(employee)).willReturn(employee);
         //when
         Employee newEmployee = employeeService.insert(employee);
         //then
@@ -77,21 +82,21 @@ public class EmployeeServiceTest {
 
     }
 
-    @Test
-    void should_call_repository_delete_when_delete_given_by_id() {
-        //given
-
-        //when
-        employeeService.delete(1);
-        //then
-        verify(employeeRepository,times(1)).delete(employeeRepository.findById(1));
-    }
+//    @Test
+//    void should_call_repository_delete_when_delete_given_by_id() {
+//        //given
+//        given(employeeJpaRepository.existsById(1)).willReturn(true);
+//        //when
+//        employeeService.delete(1);
+//        //then
+//        verify(employeeJpaRepository,times(1)).delete(employeeRepository.findById(1));
+//    }
 
     @Test
     void should_a_employee_by_id_1_employee_when_get_given_employees() {
         //given
         Employee firstEmployee = new Employee(1,"Susan", 23, "Female", 9000);
-        given(employeeRepository.findById(1)).willReturn(firstEmployee);
+        given(employeeJpaRepository.findById(1)).willReturn(java.util.Optional.of(firstEmployee));
 
         //when
         Employee employee = employeeService.findById(1);
@@ -108,7 +113,7 @@ public class EmployeeServiceTest {
 //        Employee secondEmployee = new Employee(2,"Tom", 30, "Male", 9000);
         preparedEmployees.add(firstEmployee);
 //        preparedEmployees.add(secondEmployee);
-        given(employeeRepository.findByGender("Female")).willReturn(preparedEmployees);
+        given(employeeJpaRepository.findByGender("Female")).willReturn(preparedEmployees);
 
         //when
         List<Employee>  femaleEmployees = employeeService.findByGender("Female");
@@ -121,15 +126,15 @@ public class EmployeeServiceTest {
 //    @Test
 //    void should_employees_employee_when_get_given_page_pageSize() {
 //        //given
-//        List<Employee> preparedEmployees = new ArrayList<>();
+//        Page<Employee> preparedEmployees = Page.;
 //        Employee firstEmployee = new Employee(1,"Susan", 20, "Female", 9000);
 //        Employee secondEmployee = new Employee(2,"Tom", 30, "Male", 9000);
-//        preparedEmployees.add(firstEmployee);
+//        preparedEmployees.;
 //        preparedEmployees.add(secondEmployee);
-//        given(employeeRepository.findByPage(1,2)).willReturn(preparedEmployees);
+//        given(employeeJpaRepository.findByPage(1,2)).willReturn(preparedEmployees);
 //
 //        //when
-//        List<Employee>  employees = employeeService.findByPage(1,2);
+//        Page<Employee> employees = employeeService.findByPage(1,2);
 //
 //        //then
 //        assertEquals(2, employees.size());

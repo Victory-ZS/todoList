@@ -43,6 +43,10 @@ public class EmployeeService {
     }
 
     public void delete(Integer id) {
+        boolean exists = employeeJpaRepository.existsById(id);
+        if(! exists){
+            throw new EmployeeNotFoundException();
+        }
         employeeJpaRepository.deleteById(id);
     }
 

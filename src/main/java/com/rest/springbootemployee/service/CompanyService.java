@@ -2,16 +2,16 @@ package com.rest.springbootemployee.service;
 
 import com.rest.springbootemployee.entity.Company;
 import com.rest.springbootemployee.entity.Employee;
-import com.rest.springbootemployee.repository.CompanyRepository;
+import com.rest.springbootemployee.repository.InMemoryCompanyRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
 public class CompanyService {
 
-    private CompanyRepository companyRepository;
+    private InMemoryCompanyRepository companyRepository;
 
-    public CompanyService(CompanyRepository companyRepository) {
+    public CompanyService(InMemoryCompanyRepository companyRepository) {
         this.companyRepository = companyRepository;
     }
 

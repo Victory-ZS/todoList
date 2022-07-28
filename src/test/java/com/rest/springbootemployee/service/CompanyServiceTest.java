@@ -2,7 +2,7 @@ package com.rest.springbootemployee.service;
 
 import com.rest.springbootemployee.entity.Company;
 import com.rest.springbootemployee.entity.Employee;
-import com.rest.springbootemployee.repository.CompanyRepository;
+import com.rest.springbootemployee.repository.InMemoryCompanyRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -21,7 +21,7 @@ import static org.mockito.Mockito.verify;
 public class CompanyServiceTest {
 
     @Mock
-    CompanyRepository companyRepository;
+    InMemoryCompanyRepository companyRepository;
 
     @InjectMocks
     CompanyService companyService;
@@ -30,8 +30,8 @@ public class CompanyServiceTest {
     void should_return_all_when_find_all_given_companies() {
         //given
         List<Employee> employees = new ArrayList<>();
-        employees.add(new Employee(1,"Lily1",12,"male",1000));
-        employees.add(new Employee(2,"Lily2",23,"female",2000));
+        employees.add(new Employee(1,"Lily1",12,"male",1000,22));
+        employees.add(new Employee(2,"Lily2",23,"female",2000,90));
         List<Company> preparedCompany = new ArrayList<>();
         Company firstCompany = new Company(1, "spring", employees);
         Company secondCompany = new Company(2, "summer", employees);
