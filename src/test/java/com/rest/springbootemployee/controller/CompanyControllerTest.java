@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 
 @SpringBootTest
@@ -48,8 +48,7 @@ public class CompanyControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(1)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").isNumber())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].companyName").value("spring"))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$[0].employees").value(employees.get(0)))
-        ;
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].employees[0].id").value(employees.get(0).getId()));
 
         //then
 

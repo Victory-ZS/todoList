@@ -125,10 +125,10 @@ public class CompanyServiceTest {
 
     @Test
     void should_delete_company_when_perform_get_given_id() {
-        //given
+        //given =
 
         //when
-        companyService.delete(1);
+        companyService.deleteCompanyById(1);
 
         //then
         verify(companyRepository,times(1)).deleteCompanyById(1);

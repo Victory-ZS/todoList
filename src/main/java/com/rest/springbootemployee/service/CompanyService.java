@@ -3,9 +3,10 @@ package com.rest.springbootemployee.service;
 import com.rest.springbootemployee.entity.Company;
 import com.rest.springbootemployee.entity.Employee;
 import com.rest.springbootemployee.repository.CompanyRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class CompanyService {
 
     private CompanyRepository companyRepository;
@@ -33,15 +34,15 @@ public class CompanyService {
     public Company updateCompany(int id, Company companyToUpdate) {
         Company company = companyRepository.findCompanyById(id);
         if (companyToUpdate.getCompanyName() != null){
-            company.setCompanyName(companyRepository.findCompanyById(id).getCompanyName());
+            company.setCompanyName(companyToUpdate.getCompanyName());
         }
         if (companyToUpdate.getEmployees() != null){
-            companyRepository.findCompanyById(id).setEmployees(companyToUpdate.getEmployees());
+            company.setEmployees(companyToUpdate.getEmployees());
         }
         return company;
     }
 
-    public void delete(int id) {
+    public void deleteCompanyById(int id) {
         companyRepository.deleteCompanyById(id);
     }
 
