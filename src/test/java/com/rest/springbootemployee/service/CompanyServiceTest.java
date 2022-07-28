@@ -2,6 +2,7 @@ package com.rest.springbootemployee.service;
 
 import com.rest.springbootemployee.entity.Company;
 import com.rest.springbootemployee.entity.Employee;
+import com.rest.springbootemployee.repository.CompanyJpaRepository;
 import com.rest.springbootemployee.repository.InMemoryCompanyRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,6 +24,9 @@ public class CompanyServiceTest {
     @Mock
     InMemoryCompanyRepository companyRepository;
 
+    @Mock
+    CompanyJpaRepository companyJpaRepository;
+
     @InjectMocks
     CompanyService companyService;
 
@@ -37,7 +41,7 @@ public class CompanyServiceTest {
         Company secondCompany = new Company(2, "summer", employees);
         preparedCompany.add(firstCompany);
         preparedCompany.add(secondCompany);
-        given(companyRepository.findAllCompanies()).willReturn(preparedCompany);
+        given(companyJpaRepository.findAll()).willReturn(preparedCompany);
 
         //when
         List<Company>  companies = companyService.findAllCompanies();
