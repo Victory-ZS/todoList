@@ -1,8 +1,8 @@
 package com.rest.springbootemployee.controller;
 
 import com.rest.springbootemployee.entity.Employee;
-import com.rest.springbootemployee.repository.EmployeeRepository;
 import com.rest.springbootemployee.service.EmployeeService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,7 +40,7 @@ public class EmployeeController {
 
 //    GET       /employees?page=1&pageSize=5  # Page query, page equals 1, pageSize equals 5
     @GetMapping(params = {"page","pageSize"})
-    public List<Employee> findByPage(@RequestParam int page, @RequestParam int pageSize){
+    public Page<Employee> findByPage(@RequestParam int page, @RequestParam int pageSize){
         return employeeService.findByPage(page, pageSize);
     }
 
@@ -54,14 +54,7 @@ public class EmployeeController {
 //    PUT       /employees/1                  # update an employee
     @PutMapping("/{id}")
     public Employee update(@PathVariable int id, @RequestBody Employee employeeToUpdate){
-        Employee existingEmployee = employeeService.findById(id);
-        if (employeeToUpdate.getAge() != null){
-            existingEmployee.setAge(employeeToUpdate.getAge());
-        }
-        if (employeeToUpdate.getSalary() != null){
-            existingEmployee.setSalary(employeeToUpdate.getSalary());
-        }
-        return existingEmployee;
+        return employeeService.update(id, employeeToUpdate);
     }
 
     @DeleteMapping("/{id}")

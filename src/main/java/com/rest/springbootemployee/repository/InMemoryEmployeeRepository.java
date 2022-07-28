@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Repository
-public class EmployeeRepository {
+public class InMemoryEmployeeRepository {
     private List<Employee> employees;
-    public EmployeeRepository(){
+    public InMemoryEmployeeRepository(){
         employees = new ArrayList<>();
         employees.add(new Employee(1,"Lily1",23,"male",1000));
         employees.add(new Employee(2,"Lily2",23,"female",1000));
@@ -23,7 +23,7 @@ public class EmployeeRepository {
         return employees;
     }
 
-    public Employee findById(int id){
+    public Employee findById(Integer id){
         return employees.stream()
                 .filter(employee -> employee.getId() == id)
                 .findFirst()
@@ -36,7 +36,7 @@ public class EmployeeRepository {
                 .collect(Collectors.toList());
     }
 
-    public List<Employee> findByPage(int page, int pageSize){
+    public List<Employee> findByPage(Integer page, Integer pageSize){
         return employees.stream()
                 .skip((long)(page - 1) * pageSize)
                 .limit(pageSize)

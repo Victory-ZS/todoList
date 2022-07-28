@@ -1,13 +1,21 @@
 package com.rest.springbootemployee.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Employee {
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private String name;
     private Integer age;
     private String gender;
     private Integer salary;
 
-    public Employee(int id, String name, int age, String gender, int salary) {
+    public Employee(Integer id, String name, int age, String gender, int salary) {
         this.id = id;
         this.name = name;
         this.age = age;
@@ -19,11 +27,11 @@ public class Employee {
 
     }
 
-    public int getId(){
+    public Integer getId(){
         return id;
     }
 
-    public void setId(int id){
+    public void setId(Integer id){
         this.id = id;
     }
 

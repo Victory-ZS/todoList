@@ -1,7 +1,7 @@
 package com.rest.springbootemployee.controller;
 
 import com.rest.springbootemployee.entity.Employee;
-import com.rest.springbootemployee.repository.EmployeeRepository;
+import com.rest.springbootemployee.repository.InMemoryEmployeeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class EmployeeControllerTest {
     MockMvc client;
 
     @Autowired
-    EmployeeRepository employeeRepository;
+    InMemoryEmployeeRepository employeeRepository;
 
     @BeforeEach
     void clearEmployeeInRepository(){   //first do
