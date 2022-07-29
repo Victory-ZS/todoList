@@ -57,7 +57,7 @@ public class EmployeeService {
         return employeeJpaRepository.findByGender(gender);
     }
 
-    public Page<Employee> findByPage(Integer page, Integer pageSize) {
-        return employeeJpaRepository.findAll(PageRequest.of(page, pageSize));
+    public List<Employee> findByPage(Integer page, Integer pageSize) {
+        return employeeJpaRepository.findAll(PageRequest.of(page, pageSize)).toList();
     }
 }
