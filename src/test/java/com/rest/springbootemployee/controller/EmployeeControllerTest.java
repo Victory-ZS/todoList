@@ -37,6 +37,7 @@ public class EmployeeControllerTest {
 
     @Autowired
     private CompanyJpaRepository companyJpaRepository;
+
     private Company preparedCompany;
 
     @BeforeEach
@@ -147,12 +148,12 @@ public class EmployeeControllerTest {
         client.perform(MockMvcRequestBuilders.get("/employees")
                         .param("page","0")
                         .param("pageSize", "2"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.content", hasSize(2)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].id").isNumber())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].name").value("Sally"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].age").value(22))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].gender").value("Female"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.content[0].salary").value(10000));
+                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(2)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").isNumber())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value("Sally"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].age").value(22))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].gender").value("Female"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].salary").value(10000));
 
         //then
 

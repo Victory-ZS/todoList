@@ -48,12 +48,12 @@ public class CompanyControllerTest {
     }
 
     private Employee employee1(){
-        Employee employee = new Employee(1,"Lily1",12,"male",1000,preparedCompany.getId());
+        Employee employee = new Employee(null,"Lily1",12,"male",1000,preparedCompany.getId());
         return employeeJpaRepository.save(employee);
     }
 
     private Employee employee2(){
-        Employee employee = new Employee(2,"Lily2",23,"male",2000,preparedCompany.getId());
+        Employee employee = new Employee(null,"Lily2",23,"male",2000,preparedCompany.getId());
         return employeeJpaRepository.save(employee);
     }
 
@@ -70,7 +70,7 @@ public class CompanyControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
 //                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(1)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").isNumber())
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].companyName").value("cool"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].companyName").value("spring"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].employees[0].id").value(employees.get(0).getId()));
 
         //then
@@ -81,13 +81,13 @@ public class CompanyControllerTest {
     void should_get_company_by_id_1_when_perform_get_given_companies() throws Exception {
         //given
         List<Employee> employees = new ArrayList<>();
-        employees.add(new Employee(1,"Lily1",12,"male",1000,101));
-        employees.add(new Employee(2,"Lily2",23,"female",2000,101));
+        employees.add(employee1());
+        employees.add(employee2());
         companyRepository.insertCompany(new Company(1, "spring", employees));
         companyRepository.insertCompany(new Company(2, "summer", employees));
 
         //when
-        client.perform(MockMvcRequestBuilders.get("/companies/{id}", 1))     //request
+        client.perform(MockMvcRequestBuilders.get("/companies/{id}", preparedCompany.getId()))     //request
 
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1));
@@ -99,12 +99,12 @@ public class CompanyControllerTest {
     void should_get_employees_by_id_1_when_perform_get_given_companies() throws Exception {
         //given
         List<Employee> employees = new ArrayList<>();
-        employees.add(new Employee(1,"Lily1",12,"male",1000,101));
-        employees.add(new Employee(2,"Lily2",23,"female",2000,991));
+        employees.add(employee1());
+        employees.add(employee2());
         companyRepository.insertCompany(new Company(1, "spring", employees));
 
         //when
-        client.perform(MockMvcRequestBuilders.get("/companies/{id}/employees", 1))     //request
+        client.perform(MockMvcRequestBuilders.get("/companies/{id}/employees", preparedCompany.getId()))     //request
 
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(2)))
@@ -121,8 +121,8 @@ public class CompanyControllerTest {
     void should_get_companies_when_perform_get_given_page_pageSize() throws Exception {
         //given
         List<Employee> employees = new ArrayList<>();
-        employees.add(new Employee(1,"Lily1",12,"male",1000,100));
-        employees.add(new Employee(2,"Lily2",23,"female",2000,34));
+        employees.add(employee1());
+        employees.add(employee2());
         companyRepository.insertCompany(new Company(1, "spring", employees));
         companyRepository.insertCompany(new Company(2, "summer", employees));
 
@@ -222,13 +222,13 @@ public class CompanyControllerTest {
     void should_delete_company_when_perform_get_given_id() throws Exception {
         //given
         List<Employee> employees = new ArrayList<>();
-        employees.add(new Employee(1,"Lily1",12,"male",1000,89));
-        employees.add(new Employee(2,"Lily2",23,"female",2000,78));
+        employees.add(employee1());
+        employees.add(employee2());
         companyRepository.insertCompany(new Company(1, "spring", employees));
         companyRepository.insertCompany(new Company(2, "summer", employees));
 
         //when
-        client.perform(MockMvcRequestBuilders.delete("/companies/{id}", 1))
+        client.perform(MockMvcRequestBuilders.delete("/companies/{id}", preparedCompany.getId()))
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
 
         //then

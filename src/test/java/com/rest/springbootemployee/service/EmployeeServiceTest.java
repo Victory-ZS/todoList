@@ -14,6 +14,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.BDDMockito.given;
@@ -53,7 +54,7 @@ public class EmployeeServiceTest {
         //given
         Employee employeeToUpdate = new Employee(1,"Susan", 20, "Female", 9000);
         Employee employeeToUpdateRequest = new Employee(1,"Susan", 40, "Female", 90000);
-        given(employeeJpaRepository.findById(1)).willReturn(java.util.Optional.of(employeeToUpdate)); //??????
+        given(employeeJpaRepository.findById(1)).willReturn(Optional.of(employeeToUpdate));
         //when
         employeeService.update(1,employeeToUpdateRequest);
 
@@ -95,7 +96,7 @@ public class EmployeeServiceTest {
     void should_a_employee_by_id_1_employee_when_get_given_employees() {
         //given
         Employee firstEmployee = new Employee(1,"Susan", 23, "Female", 9000);
-        given(employeeJpaRepository.findById(1)).willReturn(java.util.Optional.of(firstEmployee));
+        given(employeeJpaRepository.findById(1)).willReturn(Optional.of(firstEmployee));
 
         //when
         Employee employee = employeeService.findById(1);
@@ -128,7 +129,7 @@ public class EmployeeServiceTest {
         List<Employee> preparedEmployees = new ArrayList<>();
         Employee firstEmployee = new Employee(1,"Susan", 20, "Female", 9000);
         Employee secondEmployee = new Employee(2,"Tom", 30, "Male", 9000);
-        preparedEmployees.add(secondEmployee);
+        preparedEmployees.add(firstEmployee);
         preparedEmployees.add(secondEmployee);
         given(employeeJpaRepository.findAll(PageRequest.of(1,2))).willReturn(new PageImpl<>(preparedEmployees));
 
