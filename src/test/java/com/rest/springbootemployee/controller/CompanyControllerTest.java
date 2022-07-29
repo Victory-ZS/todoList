@@ -70,7 +70,7 @@ public class CompanyControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
 //                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(1)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").isNumber())
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].companyName").value("spring"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].companyName").value("spring"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].employees[0].id").value(employees.get(0).getId()));
 
         //then
@@ -101,7 +101,7 @@ public class CompanyControllerTest {
         List<Employee> employees = new ArrayList<>();
         employees.add(employee1());
         employees.add(employee2());
-        companyRepository.insertCompany(new Company(1, "spring", employees));
+        companyJpaRepository.save(new Company(1, "spring", employees));
 
         //when
         client.perform(MockMvcRequestBuilders.get("/companies/{id}/employees", preparedCompany.getId()))     //request

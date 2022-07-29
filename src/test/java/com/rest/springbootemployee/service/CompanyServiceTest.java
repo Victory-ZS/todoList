@@ -20,6 +20,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -146,7 +147,7 @@ public class CompanyServiceTest {
     @Test
     void should_throw_CompanyNotFoundException_when_delete_company_given_not_exist_id() {
         //given
-        given(companyJpaRepository.existsById(any())).willReturn(false);
+        given(companyJpaRepository.existsById(anyInt())).willReturn(false);
 
         //when
 
