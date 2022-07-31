@@ -8,6 +8,10 @@ public class CompanyResponse {
     private int id;
     private String companyName;
 
+    public CompanyResponse(){
+
+    }
+
     public CompanyResponse(int id, String companyName) {
         this.id = id;
         this.companyName = companyName;
