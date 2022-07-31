@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,18 +38,24 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}")
-    public Employee findById(@PathVariable int id){
-        return employeeService.findById(id);
+    public EmployeeResponse findById(@PathVariable int id){
+        return employeeMapper.toResponse(employeeService.findById(id));
     }
 
     @GetMapping(params = {"gender"})
-    public List<Employee> findByGender(@RequestParam String gender){
-        return employeeService.findByGender(gender);
+    public List<EmployeeResponse> findByGender(@RequestParam String gender){
+        return employeeService.findByGender(gender)
+                .stream()
+                .map(employeeMapper::toResponse)
+                .collect(Collectors.toList());
     }
 
     @GetMapping(params = {"page","pageSize"})
-    public List<Employee> findByPage(@RequestParam int page, @RequestParam int pageSize){
-        return employeeService.findByPage(page, pageSize);
+    public List<EmployeeResponse> findByPage(@RequestParam int page, @RequestParam int pageSize){
+        return employeeService.findByPage(page, pageSize)
+                .stream()
+                .map(employeeMapper::toResponse)
+                .collect(Collectors.toList());
     }
 
     @PostMapping
@@ -59,8 +66,8 @@ public class EmployeeController {
     }
 
     @PutMapping("/{id}")
-    public Employee update(@PathVariable int id, @RequestBody Employee employeeToUpdate){
-        return employeeService.update(id, employeeToUpdate);
+    public EmployeeResponse update(@PathVariable int id, @RequestBody EmployeeRequest employeeRequest){
+        return employeeMapper.toResponse(employeeService.update(id, employeeMapper.toEntity(employeeRequest)));
     }
 
     @DeleteMapping("/{id}")
