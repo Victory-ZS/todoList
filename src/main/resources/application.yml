@@ -2,7 +2,7 @@ spring:
   config:
     activate:
       on-profile:
-        - local
+        - default
   datasource:
     url: jdbc:mysql://localhost:3306/testdb?useUnicode=true&characterEncoding=utf8
     username: root
