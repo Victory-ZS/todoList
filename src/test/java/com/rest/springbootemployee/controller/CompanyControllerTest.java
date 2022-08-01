@@ -99,28 +99,28 @@ public class CompanyControllerTest {
         //then
     }
 
-//    @Test
-//    void should_get_employees_by_id_1_when_perform_get_given_companies() throws Exception {
-//        //given
-//        List<Employee> employees = new ArrayList<>();
-//        employees.add(employee1());
-//        employees.add(employee2());
-//        preparedCompany.setEmployees(employees);
-//        companyJpaRepository.save(preparedCompany);
-//
-//        //when
-//        client.perform(MockMvcRequestBuilders.get("/companies/{id}/employees", preparedCompany.getId()))     //request
-//
-//                .andExpect(MockMvcResultMatchers.status().isOk())
-//                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(2)))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").isNumber())
-//                .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value("Lily1"))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$[0].age").value(12))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$[0].gender").value("male"))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$[0].salary").value(1000));
-//
-//        //then
-//    }
+    @Test
+    void should_get_employees_by_id_1_when_perform_get_given_companies() throws Exception {
+        //given
+        List<Employee> employees = new ArrayList<>();
+        employees.add(employee1());
+        employees.add(employee2());
+        preparedCompany.setEmployees(employees);
+        companyJpaRepository.save(preparedCompany);
+
+        //when
+        client.perform(MockMvcRequestBuilders.get("/companies/{id}/employees", preparedCompany.getId()))     //request
+
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(2)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").isNumber())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value("Lily1"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].age").value(12))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].gender").value("male"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].salary").value(1000));
+
+        //then
+    }
 
     @Test
     void should_get_companies_when_perform_get_given_page_pageSize() throws Exception {
@@ -179,48 +179,48 @@ public class CompanyControllerTest {
         assertThat(companies.get(0).getCompanyName(), equalTo("cool"));
     }
 
-//    @Test
-//    void should_update_company_when_perform_get_given_company() throws Exception {
-//        //given
-//        List<Employee> employees = new ArrayList<>();
-//        employees.add(new Employee(1,"Lily1",12,"male",1000,90));
-//        employees.add(new Employee(2,"Lily2",23,"female",2000,999));
-//        companyJpaRepository.save(new Company(1, "spring", employees));
-//        String newCompanyJson = "{\n" +
-//                "    \"id\": 1,\n" +
-//                "    \"companyName\": \"summer\",\n" +
-//                "    \"employees\": [\n" +
-//                "        {\n" +
-//                "            \"id\": 1,\n" +
-//                "            \"name\": \"Lily1\",\n" +
-//                "            \"age\": 12,\n" +
-//                "            \"gender\": \"male\",\n" +
-//                "            \"salary\": 1000\n" +
-//                "        },\n" +
-//                "        {\n" +
-//                "            \"id\": 2,\n" +
-//                "            \"name\": \"Lily2\",\n" +
-//                "            \"age\": 23,\n" +
-//                "            \"gender\": \"female\",\n" +
-//                "            \"salary\": 2000\n" +
-//                "        }\n" +
-//                "    ]\n" +
-//                "}";
-//
-//        //when
-//        client.perform(MockMvcRequestBuilders.put("/companies/{id}",1)
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(newCompanyJson))
-//                .andExpect(MockMvcResultMatchers.status().isOk())
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(1))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.companyName").value("summer"));
-//
-//        //then
-//        List<Company> companies = companyJpaRepository.findAll();
-//        assertThat(companies, hasSize(1));
-//        assertThat(companies.get(0).getId(), equalTo(1));
-//        assertThat(companies.get(0).getCompanyName(), equalTo("summer"));
-//    }
+    @Test
+    void should_update_company_when_perform_get_given_company() throws Exception {
+        //given
+        List<Employee> employees = new ArrayList<>();
+        employees.add(employee1());
+        employees.add(employee2());
+        companyJpaRepository.save(new Company(1, "spring", employees));
+        String newCompanyJson = "{\n" +
+                "    \"id\": 1,\n" +
+                "    \"companyName\": \"summer\",\n" +
+                "    \"employees\": [\n" +
+                "        {\n" +
+                "            \"id\": 1,\n" +
+                "            \"name\": \"Lily1\",\n" +
+                "            \"age\": 12,\n" +
+                "            \"gender\": \"male\",\n" +
+                "            \"salary\": 1000\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"id\": 2,\n" +
+                "            \"name\": \"Lily2\",\n" +
+                "            \"age\": 23,\n" +
+                "            \"gender\": \"female\",\n" +
+                "            \"salary\": 2000\n" +
+                "        }\n" +
+                "    ]\n" +
+                "}";
+
+        //when
+        client.perform(MockMvcRequestBuilders.put("/companies/{id}",preparedCompany.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(newCompanyJson))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNumber())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.companyName").value("summer"));
+
+        //then
+        List<Company> companies = companyJpaRepository.findAll();
+//        assertThat(companies, hasSize(2));
+        assertThat(companies.get(0).getId(), equalTo(2));
+        assertThat(companies.get(0).getCompanyName(), equalTo("summer"));
+    }
 
     @Test
     void should_delete_company_when_perform_get_given_id() throws Exception {
