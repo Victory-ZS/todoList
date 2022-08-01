@@ -2,9 +2,9 @@ package com.rest.springbootemployee.controller;
 
 import com.rest.springbootemployee.controller.dto.CompanyRequest;
 import com.rest.springbootemployee.controller.dto.CompanyResponse;
+import com.rest.springbootemployee.controller.dto.EmployeeResponse;
 import com.rest.springbootemployee.controller.mapper.CompanyMapper;
-import com.rest.springbootemployee.entity.Employee;
-import com.rest.springbootemployee.entity.Company;
+import com.rest.springbootemployee.controller.mapper.EmployeeMapper;
 import com.rest.springbootemployee.service.CompanyService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -18,10 +18,12 @@ public class CompanyController {
 
     private final CompanyService companyService;
     private final CompanyMapper companyMapper;
+    private final EmployeeMapper employeeMapper;
 
-    public CompanyController(CompanyService companyService, CompanyMapper companyMapper){
+    public CompanyController(CompanyService companyService, CompanyMapper companyMapper, EmployeeMapper employeeMapper){
         this.companyService = companyService;
         this.companyMapper = companyMapper;
+        this.employeeMapper = employeeMapper;
     }
 
     @GetMapping
@@ -38,8 +40,11 @@ public class CompanyController {
     }
 
     @GetMapping("/{id}/employees")
-    public List<Employee> findEmployeesById(@PathVariable int id){
-        return companyService.findEmployeesById(id);
+    public List<EmployeeResponse> findEmployeesById(@PathVariable int id){
+        return companyService.findEmployeesById(id)
+                .stream()
+                .map(employeeMapper::toResponse)
+                .collect(Collectors.toList());
     }
 
     @GetMapping(params = {"page", "pageSize"})
